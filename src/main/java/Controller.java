@@ -19,6 +19,7 @@ public final class Controller
 	{
 
 		char player = ' ';
+		boolean conFlag = false;
 
 		view.displayBoard(model);
 
@@ -34,6 +35,11 @@ public final class Controller
 
 			int move = view.askForMove(player);
 
+			if(move == 0){
+				conFlag = true;
+				break;
+			}
+
 			while(!model.isMoveValid(move)) {
 				System.out.println("Invalid Move");
 				move = view.askForMove(player);
@@ -47,6 +53,8 @@ public final class Controller
 
 		if (gameTermConditions() == 'f'){
 			System.out.println("Game Over, Full Board");
+		} else if (conFlag) {
+			System.out.println("Player " + player + " Conceded. Game Over.");
 		} else {
 			System.out.println("Game Over, Player " + gameTermConditions() + " Wins!");
 		}
@@ -55,12 +63,10 @@ public final class Controller
 	public char gameTermConditions(){
 		/* Term Conditions:
 		 *  - 4 in a row Vertically, horizontally, or diagonally
-		*  - Board Full
-		*  - Player Concedes */
+		*  - Board Full */
 		char [] [] board = model.getBoard();
 		int nrRows = model.getNrRows();
 		int nrCols = model.getNrCols();
-		int tally =  1;
 
 		//Find a piece
 		for (int i= 0 ; i < nrRows ; i++) {
@@ -119,57 +125,50 @@ public final class Controller
 						}
 					}
 					//Diagonal
-					if(i == 3) {
-						if(j == 2){
-							if (board[i][j] == board[i - 1][j + 1]) {
-								tally += 1;
-								if (board[i][j] == board[i - 2][j + 2]) {
-									tally += 1;
-									if (board[i][j] == board[i - 3][j + 3]) {
-										tally += 1;
-									}
-								}
-							}
-
-							if (board[i][j] == board[i + 1][j + 1]) {
-								tally += 1;
-								if (board[i][j] == board[i + 2][j + 2]) {
-									tally += 1;
-									if (board[i][j] == board[i + 3][j + 3]) {
-										tally += 1;
-									}
-								}
-							}
-
-						} else if(j == 3){
-							if (board[i][j] == board[i - 1][j - 1]) {
-								tally += 1;
-								if (board[i][j] == board[i - 2][j - 2]) {
-									tally += 1;
-									if (board[i][j] == board[i - 3][j - 3]) {
-										tally += 1;
-									}
-								}
-							}
-							if (board[i][j] == board[i + 1][j - 1]) {
-								tally += 1;
-								if (board[i][j] == board[i + 2][j - 2]) {
-									tally += 1;
-									if (board[i][j] == board[i + 3][j - 3]) {
-										tally += 1;
-									}
+					//Check Left & Up Diagonal \.
+					if (!(j > nrCols - 4 || i > nrRows-4)) {
+						//+i, +j
+						if (board[i][j] == board [i + 1][j + 1]){
+							if (board[i][j] == board [i + 2][j + 2]){
+								if (board[i][j] == board [i + 3][j + 3]){
+									return board[i][j];
 								}
 							}
 						}
-
-						if (tally >= 4){
-							return board[i][j];
-						} else {
-							tally = 1;
-						}
-
 					}
-
+					//Check Left & Down Diagonal ./
+					if (!(j > nrCols - 4 || i < 3)) {
+						//-i,+j
+						if (board[i][j] == board [i - 1][j + 1]){
+							if (board[i][j] == board [i - 2][j + 2]){
+								if (board[i][j] == board [i - 3][j + 3]){
+									return board[i][j];
+								}
+							}
+						}
+					}
+					//Check Right & Down Diagonal /*
+					if (!(j < 3 || i > nrRows - 4)) {
+						// +i, -j
+						if (board[i][j] == board [i + 1][j - 1]){
+							if (board[i][j] == board [i + 2][j - 2]){
+								if (board[i][j] == board [i + 3][j - 3]){
+									return board[i][j];
+								}
+							}
+						}
+					}
+					//Check Right & Up Diagonal \.
+					if (!(j < 3 || i < 3 )) {
+						// -i, -j
+						if (board[i][j] == board [i - 1][j - 1]){
+							if (board[i][j] == board [i - 2][j - 2]){
+								if (board[i][j] == board [i - 3][j - 3]){
+									return board[i][j];
+								}
+							}
+						}
+					}
 				}
 			}
 		}

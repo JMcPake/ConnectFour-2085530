@@ -14,6 +14,8 @@ public final class TextView
 	{
 		System.out.println("---- NEW GAME STARTED ----");
 	}
+
+
 	
 	public final int askForMove(char player)
 	{

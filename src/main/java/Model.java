@@ -8,17 +8,14 @@ public final class Model
 	// ===========================================================================
 	// ================================ CONSTANTS ================================
 	// ===========================================================================
-	// The most common version of Connect Four has 7 rows and 6 columns.
-	public static final int DEFAULT_NR_ROWS = 7;
-	public static final int DEFAULT_NR_COLS = 6;
 	
 	// ========================================================================
 	// ================================ FIELDS ================================
 	// ========================================================================
 	// The size of the board.
-	private int nrRows;
-	private int nrCols;
-	private char[][] board;
+	private final int nrRows;
+	private final int nrCols;
+	private final char[][] board;
 
 	// =============================================================================
 	// ================================ CONSTRUCTOR ================================
@@ -26,8 +23,8 @@ public final class Model
 	public Model()
 	{
 		// Initialise the board size to its default values.
-		nrRows = DEFAULT_NR_ROWS;
-		nrCols = DEFAULT_NR_COLS;
+		nrRows = setNrRows();
+		nrCols = setNrCols();
 
 		board = new char[nrRows][nrCols];
 
@@ -92,4 +89,35 @@ public final class Model
 	public char[][] getBoard() {
 		return board;
 	}
+
+	// =========================================================================
+	// ================================ SETTERS ================================
+	// =========================================================================
+	public final int setNrRows(){
+		System.out.print("Enter the width of the board: ");
+		int nrRows = InputUtil.readIntFromUser();
+
+		while (nrRows <= 4){
+			System.out.println("Custom width must be more than 4");
+			System.out.print("Enter the width of the board: ");
+			nrRows = InputUtil.readIntFromUser();
+		}
+
+		return nrRows;
+
+	}
+
+	public final int setNrCols(){
+		System.out.print("Enter the height of the board: ");
+		int nrCols = InputUtil.readIntFromUser();
+
+		while (nrCols <= 4){
+			System.out.println("Custom height must be more than 4");
+			System.out.print("Enter the height of the board: ");
+			nrCols = InputUtil.readIntFromUser();
+		}
+
+		return nrCols;
+	}
+
 }
