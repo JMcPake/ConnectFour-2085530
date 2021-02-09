@@ -120,4 +120,13 @@ public final class Model
 		return nrCols;
 	}
 
+	public final char[][] setBoard(){
+		for (int i= 0 ; i < nrRows ; i++) {
+			for (int j = 0; j < nrCols; j++) {
+				board[i][j] = ' ';
+			}
+		}
+		return board;
+	}
+
 }

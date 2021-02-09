@@ -58,6 +58,12 @@ public final class Controller
 		} else {
 			System.out.println("Game Over, Player " + gameTermConditions() + " Wins!");
 		}
+
+		if(view.askAgain()){
+			model.setBoard();
+			startSession();
+		}
+
 	}
 
 	public char gameTermConditions(){
@@ -98,7 +104,6 @@ public final class Controller
 						}
 					}
 					//Horizontal
-
 					if(j>=3) {
 
 						if (board[i][j - 1] == board[i][j]) {

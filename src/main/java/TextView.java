@@ -15,7 +15,17 @@ public final class TextView
 		System.out.println("---- NEW GAME STARTED ----");
 	}
 
+	public final boolean askAgain(){
 
+		char choice = 'a';
+
+		while (!(choice == 'y' || choice == 'n')){
+			System.out.println("Would You Like to Play Again? [y/n]: ");
+			choice = InputUtil.readCharFromUser();
+		}
+
+		return choice == 'y';
+	}
 	
 	public final int askForMove(char player)
 	{
